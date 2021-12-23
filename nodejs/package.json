@@ -1,0 +1,17 @@
+{
+    "name": "zatca_sa_qrcode",
+    "version": "1.0.0",
+    "description": "",
+    "main": "./bin/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "bin": {
+        "zatca_sa_qrcode": "./bin/index.js"
+    },
+    "author": "EgyJs",
+    "license": "ISC",
+    "dependencies": {
+        "yargs": "^17.3.0"
+    }
+}

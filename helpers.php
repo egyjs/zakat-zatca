@@ -1,0 +1,133 @@
+<?php
+
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Writer\SvgWriter;
+use JetBrains\PhpStorm\NoReturn;
+
+function setTimeZone($timezone = null) {
+    if ($timezone) {
+        date_default_timezone_set($timezone);
+        return;
+    }
+    // api to get user location from ip
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+    // set timezone to user location
+    if (isset($details->timezone)) {
+        date_default_timezone_set($details->timezone);
+    }else{
+        date_default_timezone_set('Asia/Riyadh');
+    }
+}
+
+function base_path($path = '') {
+    return __DIR__ . '/' . $path;
+}
+
+function generateQRImageResponse($qrString, $fileName = 'qrcode', $type = 'png', $size = 300) {
+
+    $writer = ($type == 'png' || $type == 'base64') ? new PngWriter() : new SvgWriter();
+
+    $result = Endroid\QrCode\Builder\Builder::create()
+        ->writer($writer)
+        ->writerOptions([])
+        ->data($qrString)
+        ->encoding(new Encoding('UTF-8'))
+        ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+        ->size($size)
+        ->margin(10)
+        ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+        ->build();
+
+    $img = $result->getString();
+    // img header
+
+    if ($writer instanceof PngWriter && $type != 'base64') {
+        header('Content-Type: image/png');
+    } else if ($writer instanceof SvgWriter) {
+        header('Content-Type: image/svg+xml');
+    }else{
+        echo $result->getDataUri();
+        exit;
+    }
+    echo $img;
+}
+
+function __exec(array $qrData,$size = 500): bool|string|null
+{
+    $node = 'C:\Users\el3za\AppData\Roaming\nvm\v16.8.0\node.exe';
+    $script = base_path('nodejs/bin/index.js');
+    //$node = '/home/hermosa/.nvm/versions/node/v17.2.0/bin/node';
+    if (!file_exists($node)) {
+        throw new Exception('Node.js is not installed');
+    }
+    if (!file_exists($script)) {
+        throw new Exception('Script not found');
+    }
+    // implode $qrData to string as arguments
+    $args = implode(' ', array_map(function ($v, $k) { return sprintf("--%s=\"%s\"", $k, $v); },
+        $qrData,
+        array_keys($qrData)
+    ));
+    // execute node script
+    $cmd = "$node $script $args 2>&1";
+    $qrString = shell_exec($cmd);
+    return $qrString;
+}
+
+function url($path = '') {
+    return 'http://' . $_SERVER['HTTP_HOST'] . '/' . $path;
+}
+
+function addRandomStringToString($string){
+    // get random string
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < 10; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    // add random string to string with hiddenWord
+    $hiddenWord = rand(0,1)?'NO_Xer':'F0XiR';
+    $hiddenWord = $hiddenWord.$randomString.$hiddenWord;
+    // convert string to array
+    $arrString = str_split($string);
+    // add hiddenWord to array in random position in array
+    $randomPosition = rand(0,count($arrString)-1);
+    $arrString = array_merge(array_slice($arrString, 0, $randomPosition), [$hiddenWord], array_slice($arrString, $randomPosition));
+
+    // convert array to string
+    $string = implode('',$arrString);
+    return $string;
+}
+function generateQRImageJsonResponse(array $qrData,$size = 500) {
+    // convert $qrData to base64 string
+    $qrDataAsBase64 = trim(__exec($qrData));
+    $size = $size/2002;
+
+    $qrDataAsBase64 = addRandomStringToString($qrDataAsBase64);
+
+    $response = [
+        'data' => [
+            'qr_code_png' => url("/qrcode/$size/$qrDataAsBase64/qrcode.png"),
+            'qr_code_svg' => url("/qrcode/$size/$qrDataAsBase64/qrcode.svg"),
+            'qr_code_base64' => url("/qrcode/$size/$qrDataAsBase64/qrcode.base64"),
+        ],
+    ];
+    jsonResponse($response);
+}
+
+// return json response
+#[NoReturn] function jsonResponse($data, $status = 200)
+{
+    header('Content-Type: application/json');
+    http_response_code($status);
+    $is_error = $status >= 400;
+    echo json_encode([
+        'success' => !$is_error,
+    ]+$data);
+    exit;
+}

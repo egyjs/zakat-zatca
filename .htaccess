@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI}/qrcode !^/qrcode.png.php
+RewriteRule ^(.*)qrcode\/(.*)\/(.*)\/(.*)\.(\S+)$ /qrcode.png.php?size=$2&qrDataAsBase64=$3&imgName=$4&imgType=$5 [L,QSA]
