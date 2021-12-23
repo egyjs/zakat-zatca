@@ -86,8 +86,12 @@ function __exec(array $qrData,$size = 500): bool|string|null
     return $qrString;
 }
 
-function url($path = '') {
-    return 'http://' . $_SERVER['HTTP_HOST'] . '/' . $path;
+function url($path = ''): string
+{
+    // return url with https or http based on request
+    // add slash in the beginning of the path if not already exists
+    $path = ltrim($path, '/');
+    return 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . '/' . $path;
 }
 
 function addRandomStringToString($string){
@@ -120,9 +124,9 @@ function generateQRImageJsonResponse(array $qrData,$size = 500) {
 
     $response = [
         'data' => [
-            'qr_code_png' => url("/qrcode/$size/$qrDataAsBase64/qrcode.png"),
-            'qr_code_svg' => url("/qrcode/$size/$qrDataAsBase64/qrcode.svg"),
-            'qr_code_base64' => url("/qrcode/$size/$qrDataAsBase64/qrcode.base64"),
+            'qr_code_png' => ("/qrcode/$size/$qrDataAsBase64/qrcode.png"),
+            'qr_code_svg' => ("/qrcode/$size/$qrDataAsBase64/qrcode.svg"),
+            'qr_code_base64' => ("/qrcode/$size/$qrDataAsBase64/qrcode.base64"),
         ],
     ];
     jsonResponse($response);

@@ -13,9 +13,18 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // get parameters
 $size = isset($_GET['size']) ? $_GET['size'] * 2002 : '200';
-$qrDataAsBase64 = isset($_GET['qrDataAsBase64']) ? preg_replace('/(F0XiR(\S+)F0XiR|NO_Xer(\S+)NO_Xer)/m','',$_GET['qrDataAsBase64']) : '';
-$imgName = isset($_GET['imgName']) ? $_GET['imgName'] : 'qrcode';
-$imgType = isset($_GET['imgType']) ? $_GET['imgType'] : 'png';
+$qrDataAsBase64 = $_GET['qrDataAsBase64'] ?? '';
+$imgName = $_GET['imgName'] ?? 'qrcode';
+$imgType = $_GET['imgType'] ?? 'png';
 
+$qrDataAsBase64 = urldecode($qrDataAsBase64);
+// check if random string is not exits in the string ind return error if not, else remove it
+// preg_replace('/(F0XiR(\S+)F0XiR|NO_Xer(\S+)NO_Xer)/m','',$_GET['qrDataAsBase64'])
+$randomStringPattern = '/(F0XiR(\S+)F0XiR|NO_Xer(\S+)NO_Xer)/m';
+if (preg_match($randomStringPattern, $qrDataAsBase64, $matches)) {
+    $qrDataAsBase64 = preg_replace($randomStringPattern, '', $qrDataAsBase64);
+} else {
+    jsonResponse(['errors' => ['url_pattern'=>'you can not use this url,like this!']], 400);
+}
 // create qrcode image
 generateQRImageResponse($qrDataAsBase64,$imgName,$imgType,$size);

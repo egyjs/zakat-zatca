@@ -13,9 +13,8 @@ setTimeZone();
 // required fields: (sellerName OR name), (vatRegistrationNumber OR rn), (timestamp OR time), (totalWithVat OR total), (vat)
 $validator = new Validator();
 $validation = $validator->validate($_POST, [
-    // only english letters
-    'sellerName' => 'required_without:name|regex:/^[a-zA-Z ]+$/',
-    'name' => 'required_without:sellerName|regex:/^[a-zA-Z ]+$/',
+    'sellerName' => 'required_without:name',
+    'name' => 'required_without:sellerName',
 
     'vatRegistrationNumber' => 'required_without:rn',
     'rn' => 'required_without:vatRegistrationNumber',
@@ -27,10 +26,10 @@ $validation = $validator->validate($_POST, [
     'total' => 'required_without:totalWithVat',
 
     'vat' => 'required',
-    'size' => 'integer|min:300',
+    'size' => 'integer|min:120',
 ], [
-    'sellerName' => '`sellerName` is required, or you can use `name` instead, must be in English',
-    'name' => '`name` is required, or you can use `sellerName` instead, must be in English',
+    'sellerName' => '`sellerName` is required or you can use `name` instead',
+    'name' => '`name` is required or you can use `sellerName` instead',
 
     'vatRegistrationNumber' => '`vatRegistrationNumber` is required or you can use `rn` instead',
     'rn' => '`rn` is required or you can use `vatRegistrationNumber` instead',
@@ -54,4 +53,6 @@ if ($validation->fails()) {
 $data = array_filter($_POST, function ($key) {
     return in_array($key, ['sellerName', 'name', 'vatRegistrationNumber', 'rn', 'timestamp', 'time', 'totalWithVat', 'total', 'vat']);
 }, ARRAY_FILTER_USE_KEY);
+dd($_SERVER,$_ENV);
 generateQRImageJsonResponse($data,$_POST['size']??'300');
+

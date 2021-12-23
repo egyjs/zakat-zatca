@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "df1bc78f-c1b0-47be-8e64-1c92062495a4",
+		"name": "zakat-zatca.v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Request QR Code Image",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Company name",
+							"description": "اسم الشركة",
+							"type": "text"
+						},
+						{
+							"key": "vatRegistrationNumber",
+							"value": "123456789012345",
+							"description": "vatRegistrationNumber | الرقم الضريبي",
+							"type": "text"
+						},
+						{
+							"key": "timestamp",
+							"value": "2002-12-12 12:12:12",
+							"description": "Format:Y-m-d H:i:s | الوقت مع التاريخ ",
+							"type": "text"
+						},
+						{
+							"key": "totalWithVat",
+							"value": "115",
+							"description": "total price with vat value | المجموع مع قيمة الضريبه",
+							"type": "text"
+						},
+						{
+							"key": "vat",
+							"value": "15",
+							"description": "just the vat value | قيمة الطريبة",
+							"type": "text"
+						},
+						{
+							"key": "size",
+							"value": "0",
+							"description": "qrcode image size| حجم الصورة",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://apis.zakat.v1.egyjs.com/",
+					"protocol": "https",
+					"host": [
+						"apis",
+						"zakat",
+						"v1",
+						"egyjs",
+						"com"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Request QR Code Image Example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Company name",
+									"description": "اسم الشركة",
+									"type": "text"
+								},
+								{
+									"key": "vatRegistrationNumber",
+									"value": "123456789012345",
+									"description": "vatRegistrationNumber | الرقم الضريبي",
+									"type": "text"
+								},
+								{
+									"key": "timestamp",
+									"value": "2002-12-12 12:12:12",
+									"description": "Format:Y-m-d H:i:s | الوقت مع التاريخ ",
+									"type": "text"
+								},
+								{
+									"key": "totalWithVat",
+									"value": "115",
+									"description": "total price with vat value | المجموع مع قيمة الضريبه",
+									"type": "text"
+								},
+								{
+									"key": "vat",
+									"value": "15",
+									"description": "just the vat value | قيمة الطريبة",
+									"type": "text"
+								},
+								{
+									"key": "size",
+									"value": "0",
+									"description": "qrcode image size| حجم الصورة",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://apis.zakat.v1.egyjs.com/",
+							"protocol": "https",
+							"host": [
+								"apis",
+								"zakat",
+								"v1",
+								"egyjs",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.20.1"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 23 Dec 2021 21:45:05 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.0.10"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=31536000"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"data\": {\n        \"qr_code_png\": \"http://apis.zakat.v1.egyjs.com//qrcode/0/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4OTAxMjMNO_XerXMyeGxyIIUNO_Xer0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.png\",\n        \"qr_code_svg\": \"http://apis.zakat.v1.egyjs.com//qrcode/0/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4OTAxMjMNO_XerXMyeGxyIIUNO_Xer0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.svg\",\n        \"qr_code_base64\": \"http://apis.zakat.v1.egyjs.com//qrcode/0/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4OTAxMjMNO_XerXMyeGxyIIUNO_Xer0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.base64\"\n    }\n}"
+				}
+			]
+		}
+	]
+}
