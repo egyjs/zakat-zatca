@@ -62,7 +62,11 @@ function generateQRImageResponse($qrString, $fileName = 'qrcode', $type = 'png',
 
 function __exec(array $qrData,$size = 500): bool|string|null
 {
-    $node = 'C:\Users\el3za\AppData\Roaming\nvm\v16.8.0\node.exe';
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { // if windows
+        $node = 'C:\Users\el3za\AppData\Roaming\nvm\v16.8.0\node.exe';
+    } else {
+        $node = '/home/egyjs/.nvm/versions/node/v17.3.0/bin/node';
+    }
     $script = base_path('nodejs/bin/index.js');
     //$node = '/home/hermosa/.nvm/versions/node/v17.2.0/bin/node';
     if (!file_exists($node)) {
