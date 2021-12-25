@@ -19,7 +19,6 @@ function checkIfValidRequest(): bool|string
     }else if(!str_contains($_SERVER['HTTP_X_RAPIDAPI_HOST'], 'rapidapi')){
         jsonResponse(['message' => 'Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.'], 401);
     }
-    dd($_SERVER['']);
     return true;
 }
 
