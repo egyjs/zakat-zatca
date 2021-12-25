@@ -16,7 +16,7 @@
 						{
 							"key": "name",
 							"value": "Company name",
-							"description": "اسم الشركة",
+							"description": "اسم الشركة باللغة الإنجليزية",
 							"type": "text"
 						},
 						{
@@ -45,7 +45,7 @@
 						},
 						{
 							"key": "size",
-							"value": "0",
+							"value": "300",
 							"description": "qrcode image size| حجم الصورة",
 							"type": "text"
 						}
@@ -68,7 +68,7 @@
 			},
 			"response": [
 				{
-					"name": "Request QR Code Image Example",
+					"name": "Request QR Code Image",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -78,7 +78,7 @@
 								{
 									"key": "name",
 									"value": "Company name",
-									"description": "اسم الشركة",
+									"description": "اسم الشركة باللغة الإنجليزية",
 									"type": "text"
 								},
 								{
@@ -107,7 +107,7 @@
 								},
 								{
 									"key": "size",
-									"value": "0",
+									"value": "300",
 									"description": "qrcode image size| حجم الصورة",
 									"type": "text"
 								}
@@ -138,7 +138,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Thu, 23 Dec 2021 21:45:05 GMT"
+							"value": "Thu, 23 Dec 2021 23:28:49 GMT"
 						},
 						{
 							"key": "Content-Type",
@@ -182,7 +182,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"success\": true,\n    \"data\": {\n        \"qr_code_png\": \"http://apis.zakat.v1.egyjs.com//qrcode/0/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4OTAxMjMNO_XerXMyeGxyIIUNO_Xer0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.png\",\n        \"qr_code_svg\": \"http://apis.zakat.v1.egyjs.com//qrcode/0/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4OTAxMjMNO_XerXMyeGxyIIUNO_Xer0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.svg\",\n        \"qr_code_base64\": \"http://apis.zakat.v1.egyjs.com//qrcode/0/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4OTAxMjMNO_XerXMyeGxyIIUNO_Xer0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.base64\"\n    }\n}"
+					"body": "{\n    \"success\": true,\n    \"data\": {\n        \"qr_code_png\": \"/qrcode/0.14985014985015/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4F0XiRqlxteucqf2F0XiROTAxMjM0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.png\",\n        \"qr_code_svg\": \"/qrcode/0.14985014985015/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4F0XiRqlxteucqf2F0XiROTAxMjM0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.svg\",\n        \"qr_code_base64\": \"/qrcode/0.14985014985015/AQxDb21wYW55IG5hbWUCDzEyMzQ1Njc4F0XiRqlxteucqf2F0XiROTAxMjM0NQMTMjAwMi0xMi0xMiAxMjoxMjoxMgQDMTE1BQIxNQ==/qrcode.base64\"\n    }\n}"
 				}
 			]
 		}

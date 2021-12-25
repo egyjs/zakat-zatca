@@ -3,6 +3,7 @@
         "php": ">=8.0.0",
         "symfony/var-dumper": "^6.0",
         "rakit/validation": "^1.4",
-        "endroid/qr-code": "^4.4"
+        "endroid/qr-code": "^4.4",
+      "ext-curl": "*"
     }
 }

@@ -7,6 +7,9 @@ require_once 'helpers.php';
 if (!file_exists('vendor/autoload.php')) throw new Exception('please run "composer install" in the project root');
 require_once __DIR__ . '/vendor/autoload.php';
 
+if (!isset($_GET['superuser'])) {
+    checkIfValidRequest();
+}
 setTimeZone();
 
 // validate Form data

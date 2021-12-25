@@ -1,58 +1,20 @@
 <?php
-// this file is restfull api
-// header('Content-Type: application/json');
-use Rakit\Validation\Validator;
+// tutorial to how use this api
+// Title: 1. First step
+// Description: you need to create a new request to with your bill information
+// as [ "Name" as the seller's name, "vatRegistrationNumber" or "rn" that registered, "timestamp" or "time" that the bill was created on,
+// "totalWithVat" or "total" is the total amount of the bill with VAT/TAX, "vat" is the VAT/TAX amount, "size" as the QrCode image size]
+// the response will be a json object with the following keys:
+// "status" as the status of the response, "data" as the data of the response, or "errors" as the error of the response
+// "status" can be "true" or "false"
+// "data" will contain the following keys:
+// ["qr_code_png","qr_code_svg","qr_code_base64"]
+// you can choose what ever you want
 
-require_once 'helpers.php';
-if (!file_exists('vendor/autoload.php')) throw new Exception('please run "composer install" in the project root');
-require_once __DIR__ . '/vendor/autoload.php';
+// Title: 2. Final step
+// Description: after you get the data from the response, you can use any of the three methods to get the qr code
+// you can use the "qr_code_png" method to get the qr code as a png image
+// you can use the "qr_code_svg" method to get the qr code as a svg image
+// you can use the "qr_code_base64" method to get the qr code as a base64 string as plain text
 
-setTimeZone();
-
-// validate Form data
-// required fields: (sellerName OR name), (vatRegistrationNumber OR rn), (timestamp OR time), (totalWithVat OR total), (vat)
-$validator = new Validator();
-$validation = $validator->validate($_POST, [
-    'sellerName' => 'required_without:name',
-    'name' => 'required_without:sellerName',
-
-    'vatRegistrationNumber' => 'required_without:rn',
-    'rn' => 'required_without:vatRegistrationNumber',
-
-    'timestamp' => 'required_without:time|date:Y-m-d H:i:s',
-    'time' => 'required_without:timestamp|date:Y-m-d H:i:s',
-
-    'totalWithVat' => 'required_without:total',
-    'total' => 'required_without:totalWithVat',
-
-    'vat' => 'required',
-    'size' => 'integer|min:120',
-], [
-    'sellerName' => '`sellerName` is required or you can use `name` instead',
-    'name' => '`name` is required or you can use `sellerName` instead',
-
-    'vatRegistrationNumber' => '`vatRegistrationNumber` is required or you can use `rn` instead',
-    'rn' => '`rn` is required or you can use `vatRegistrationNumber` instead',
-
-    'timestamp' => '`timestamp` is required and should be a valid timestamp or you can use `time` instead',
-    'time' => '`time` is required and should be a valid timestamp or you can use `timestamp` instead',
-
-    'totalWithVat' => '`totalWithVat` is required or you can use `total` instead',
-    'total' => '`total` is required or you can use `totalWithVat` instead',
-
-    'vat' => '`vat` is required'
-]);
-
-// if validation fails return the messages
-if ($validation->fails()) {
-    $errors = $validation->errors()->toArray();
-    jsonResponse(['errors'=>$errors], 400);
-}
-
-// get only the required fields from the form
-$data = array_filter($_POST, function ($key) {
-    return in_array($key, ['sellerName', 'name', 'vatRegistrationNumber', 'rn', 'timestamp', 'time', 'totalWithVat', 'total', 'vat']);
-}, ARRAY_FILTER_USE_KEY);
-dd($_SERVER,$_ENV);
-generateQRImageJsonResponse($data,$_POST['size']??'300');
 
