@@ -15,9 +15,9 @@ use JetBrains\PhpStorm\NoReturn;
 function checkIfValidRequest(): bool|string
 {
     if(!isset($_SERVER['HTTP_X_RAPIDAPI_HOST']) || !isset($_SERVER['HTTP_X_RAPIDAPI_KEY']) || !isset($_SERVER['HTTP_X_RAPIDAPI_USER'])){
-        jsonResponse(['message' => 'Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.'], 401);
+        jsonResponse(['message' => 'Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.',$_SERVER], 401);
     }else if(!str_contains($_SERVER['HTTP_X_RAPIDAPI_HOST'], 'rapidapi')){
-        jsonResponse(['message' => 'Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.'], 401);
+        jsonResponse(['message' => 'Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.',$_SERVER], 401);
     }
     return true;
 }
