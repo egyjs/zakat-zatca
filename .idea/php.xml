@@ -9,6 +9,9 @@
       <path value="$PROJECT_DIR$/vendor/rakit/validation" />
       <path value="$PROJECT_DIR$/vendor/bacon/bacon-qr-code" />
       <path value="$PROJECT_DIR$/vendor/dasprid/enum" />
+      <path value="$PROJECT_DIR$/vendor/chillerlan/php-settings-container" />
+      <path value="$PROJECT_DIR$/vendor/chillerlan/php-qrcode" />
+      <path value="$PROJECT_DIR$/vendor/salla/zatca" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

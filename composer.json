@@ -4,6 +4,13 @@
         "symfony/var-dumper": "^6.0",
         "rakit/validation": "^1.4",
         "endroid/qr-code": "^4.4",
-      "ext-curl": "*"
-    }
+        "ext-curl": "*",
+        "salla/zatca": "dev-master"
+    },
+    "repositories": [
+        {
+            "url": "https://github.com/egyjs/ZATCA-Package.git",
+            "type": "git"
+        }
+    ]
 }

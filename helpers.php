@@ -10,6 +10,12 @@ use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Writer\SvgWriter;
 use JetBrains\PhpStorm\NoReturn;
+use Salla\ZATCA\GenerateQrCode;
+use Salla\ZATCA\Tags\InvoiceDate;
+use Salla\ZATCA\Tags\InvoiceTaxAmount;
+use Salla\ZATCA\Tags\InvoiceTotalAmount;
+use Salla\ZATCA\Tags\Seller;
+use Salla\ZATCA\Tags\TaxNumber;
 
 // check if valid request by checking if the request HTTP_X_RAPIDAPI_HOST contains the string "rapidapi"
 function checkIfValidRequest(): bool|string
@@ -71,7 +77,23 @@ function generateQRImageResponse($qrString, $fileName = 'qrcode', $type = 'png',
     echo $img;
 }
 
-function __exec(array $qrData,$size = 500): bool|string|null
+function generateHash(array $qrData): string
+{
+    // use array map with inline fn
+    $array = [];
+    foreach ($qrData as $key => $value) {
+        $key = in_array($key, ['name','sellerName'])? Seller::class : $key;
+        $key = in_array($key, ['rn','vatRegistrationNumber'])? TaxNumber::class : $key;
+        $key = in_array($key, ['time','timestamp'])? InvoiceDate::class : $key;
+        $key = in_array($key, ['total','totalWithVat'])? InvoiceTotalAmount::class : $key;
+        $key = $key == 'vat' ? InvoiceTaxAmount::class : $key;
+        $array[] = new $key($value);
+    }
+
+    return GenerateQrCode::fromArray($array)->toBase64();
+}
+
+function __exec(array $qrData): bool|string|null
 {
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { // if windows
         $node = 'C:\Users\el3za\AppData\Roaming\nvm\v16.8.0\node.exe';
@@ -91,8 +113,10 @@ function __exec(array $qrData,$size = 500): bool|string|null
         $qrData,
         array_keys($qrData)
     ));
+
     // execute node script
     $cmd = "$node $script $args 2>&1";
+
     $qrString = shell_exec($cmd);
     return $qrString;
 }
@@ -128,7 +152,7 @@ function addRandomStringToString($string){
 }
 function generateQRImageJsonResponse(array $qrData,$size = 500) {
     // convert $qrData to base64 string
-    $qrDataAsBase64 = trim(__exec($qrData));
+    $qrDataAsBase64 = trim(generateHash($qrData));
     $size = $size/2002;
 
     $qrDataAsBase64 = addRandomStringToString($qrDataAsBase64);

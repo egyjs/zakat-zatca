@@ -1,9 +1,8 @@
 getTLVForValue = (tagNum, tagValue) => {
-    let tagBuf = Buffer.from([tagNum], 'utf-8');
+    let tagBuf = Buffer.from([tagNum+""], 'UTF-8');
     let tagValueLenBuf = Buffer.from([(tagValue+"").length], 'utf-8');
     let tagValueBuf = Buffer.from((tagValue+""), 'utf-8');
     let bufsArray = [tagBuf, tagValueLenBuf, tagValueBuf];
-    //console.log([tagNum,tagValue]);
     return Buffer.concat(bufsArray);
 }
 

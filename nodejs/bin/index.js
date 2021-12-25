@@ -38,5 +38,5 @@ const options = yargs.usage(usage)
     .help(true)
     .argv;
 
-
-console.log(getBillQr(options.sellerName, options.vatRegistrationNumber, options.timestamp, options.totalWithVat, options.vat));
+// console.log(options.sellerName);
+console.log(getBillQr('تست', options.vatRegistrationNumber, options.timestamp, options.totalWithVat, options.vat));

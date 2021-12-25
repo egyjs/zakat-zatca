@@ -9,6 +9,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/rakit/validation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bacon/bacon-qr-code" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/dasprid/enum" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/chillerlan/php-settings-container" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/chillerlan/php-qrcode" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/salla/zatca" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

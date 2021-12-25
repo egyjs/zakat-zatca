@@ -18,7 +18,7 @@ $validator = new Validator();
 $validation = $validator->validate($_POST, [
     // only english letters
     'sellerName' => 'required_without:name|regex:/^[a-zA-Z ]+$/',
-    'name' => 'required_without:sellerName|regex:/^[a-zA-Z ]+$/',
+    'name' => 'required_without:sellerName',
 
     'vatRegistrationNumber' => 'required_without:rn',
     'rn' => 'required_without:vatRegistrationNumber',
