@@ -47,10 +47,10 @@ function logRequest($error = null){
         $line = date('Y-m-d H:i:s') . ' - ' . (is_array($error) ?json_encode($error):$error) . PHP_EOL;
     }else{
         $logFile = $logDir . date('Y-m-d') . '.log';
-        $user = @$_SERVER['HTTP_X_RAPIDAPI_USER'];
+        $user = @$_SERVER['HTTP_X_RAPIDAPI_USER'] ?? 'no user';
         $date = date('Y-m-d H:i:s');
         $requestBody = json_encode(['body'=>$_POST,'server'=>$_SERVER]);
-        $ip = $_SERVER['X-Forwarded-For'] ?? $_SERVER['REMOTE_ADDR'];
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
         $line = "User: $user, IP: $ip, Date: $date, Request: $requestBody\n";
     }
     $log = fopen($logFile, 'a');
@@ -63,7 +63,7 @@ function setTimeZone($timezone = null) {
         return;
     }
     // api to get user location from ip
-    $ip = $_SERVER['X-Forwarded-For'] ?? $_SERVER['REMOTE_ADDR'];
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
     $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
     // set timezone to user location
     if (isset($details->timezone)) {
