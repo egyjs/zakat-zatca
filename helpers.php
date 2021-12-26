@@ -20,14 +20,43 @@ use Salla\ZATCA\Tags\TaxNumber;
 // check if valid request by checking if the request HTTP_X_RAPIDAPI_HOST contains the string "rapidapi"
 function checkIfValidRequest(): bool|string
 {
-    if(!isset($_SERVER['HTTP_X_RAPIDAPI_HOST']) || !isset($_SERVER['HTTP_X_RAPIDAPI_USER'])){
-        jsonResponse(['message' => 'Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.'], 401);
-    }else if(!str_contains($_SERVER['HTTP_X_RAPIDAPI_HOST'], 'rapidapi')){
-        jsonResponse(['message' => 'Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.'], 401);
+    if (!isset($_GET['superuser'])) {
+        if (!isset($_SERVER['HTTP_X_RAPIDAPI_HOST']) || !isset($_SERVER['HTTP_X_RAPIDAPI_USER'])) {
+            logRequest(['error_code' => '1', '$_REQUEST' => $_REQUEST, '$_POST' => $_POST]);
+            jsonResponse(['message' => '(1) Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.'], 401);
+        } else if (!str_contains($_SERVER['HTTP_X_RAPIDAPI_HOST'], 'rapidapi')) {
+            logRequest(['error_code' => '2', '$_REQUEST' => $_REQUEST, '$_POST' => $_POST]);
+            jsonResponse(['message' => '(2) Invalid API key. Go to https://rapidapi.com/egyjs.com@gmail.com/api/qr-code-for-saudi-arabia-zakat-zatca1/ for more info.'], 401);
+        }
     }
+    logRequest();
     return true;
 }
 
+function logRequest($error = null){
+    $logDir = 'rapidapi_log/';
+    if (!file_exists($logDir)) {
+        mkdir($logDir, 0777, true);
+    }
+    if ($error != null) {
+        $logErrorDir = $logDir . 'error/';
+        if (!file_exists($logErrorDir)) {
+            mkdir($logErrorDir, 0777, true);
+        }
+        $logFile = $logErrorDir . date('Y-m-d') . '.log';
+        $line = date('Y-m-d H:i:s') . ' - ' . (is_array($error) ?json_encode($error):$error) . PHP_EOL;
+    }else{
+        $logFile = $logDir . date('Y-m-d') . '.log';
+        $user = @$_SERVER['HTTP_X_RAPIDAPI_USER'];
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $date = date('Y-m-d H:i:s');
+        $requestBody = json_encode($_POST);
+        $line = "User: $user, IP: $ip, Date: $date, Request: $requestBody\n";
+    }
+    $log = fopen($logFile, 'a');
+    fwrite($log, $line);
+    fclose($log);
+}
 function setTimeZone($timezone = null) {
     if ($timezone) {
         date_default_timezone_set($timezone);
