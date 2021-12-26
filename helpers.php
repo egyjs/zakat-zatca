@@ -49,7 +49,7 @@ function logRequest($error = null){
         $logFile = $logDir . date('Y-m-d') . '.log';
         $user = @$_SERVER['HTTP_X_RAPIDAPI_USER'];
         $date = date('Y-m-d H:i:s');
-        $requestBody = json_encode($_POST);
+        $requestBody = json_encode(['body'=>$_POST,'server'=>$_SERVER]);
         $ip = $_SERVER['X-Forwarded-For'] ?? $_SERVER['REMOTE_ADDR'];
         $line = "User: $user, IP: $ip, Date: $date, Request: $requestBody\n";
     }
