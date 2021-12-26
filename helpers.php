@@ -122,34 +122,6 @@ function generateHash(array $qrData): string
     return GenerateQrCode::fromArray($array)->toBase64();
 }
 
-function __exec(array $qrData): bool|string|null
-{
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') { // if windows
-        $node = 'C:\Users\el3za\AppData\Roaming\nvm\v16.8.0\node.exe';
-    } else {
-        $node = '/home/egyjs/.nvm/versions/node/v17.3.0/bin/node';
-    }
-    $script = base_path('nodejs/bin/index.js');
-    //$node = '/home/hermosa/.nvm/versions/node/v17.2.0/bin/node';
-    if (!file_exists($node)) {
-        throw new Exception('Node.js is not installed');
-    }
-    if (!file_exists($script)) {
-        throw new Exception('Script not found');
-    }
-    // implode $qrData to string as arguments
-    $args = implode(' ', array_map(function ($v, $k) { return sprintf("--%s=\"%s\"", $k, $v); },
-        $qrData,
-        array_keys($qrData)
-    ));
-
-    // execute node script
-    $cmd = "$node $script $args 2>&1";
-
-    $qrString = shell_exec($cmd);
-    return $qrString;
-}
-
 function url($path = ''): string
 {
     // return url with https or http based on request
