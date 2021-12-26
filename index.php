@@ -9,7 +9,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 
 checkIfValidRequest();
-setTimeZone();
+// setTimeZone();
 
 // validate Form data
 // required fields: (sellerName OR name), (vatRegistrationNumber OR rn), (timestamp OR time), (totalWithVat OR total), (vat)
